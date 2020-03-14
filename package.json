@@ -1,0 +1,25 @@
+{
+  "name": "bindingx_for_miniprogram",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/bindingx.js",
+  "scripts": {
+    "build": "webpack -p --mode development --config webpack.config.js --progress --colors",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/roy2an/bindingx_for_miniprogram.git"
+  },
+  "author": "RoYan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/roy2an/bindingx_for_miniprogram/issues"
+  },
+  "homepage": "https://github.com/roy2an/bindingx_for_miniprogram#readme",
+  "dependencies": {
+    "animation-util": "^1.0.11",
+    "webpack": "^4.42.0",
+    "webpack-cli": "^3.3.11"
+  }
+}

@@ -1,0 +1,9 @@
+<view class="container">
+  <view class="page-body">
+    <view class="page-section">
+      <view class="animation-element-wrapper">
+        <view class="animation-element" animation="{{animation}}"></view>
+      </view>
+    </view>
+  </view>
+</view>
