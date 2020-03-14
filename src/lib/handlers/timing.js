@@ -16,7 +16,7 @@
 
 'use strict';
 
-import Animation from 'animation-util';
+import Animation from './animation-util/index';
 
 export default class TimingHandler {
   constructor(binding) {

@@ -5,7 +5,7 @@ module.exports = {
   entry: './src/bindingx.js',
   output: {
     path: path.resolve(__dirname, '../lib'),
-    publicPath: '/lib/',
+    publicPath: '/dist/',
     filename: 'bindingx.js',
     libraryTarget: 'commonjs2'
   },
