@@ -38,7 +38,7 @@ function formatExpression (expression) {
 }
 
 export default {
-  bind (options, callback) {
+  bind (options, callback, animation) {
     if (!options) {
       throw new Error('should pass options for binding');
     }
@@ -51,15 +51,15 @@ export default {
       });
     }
     
-    return Binding.bind(options, callback)
+    return Binding.bind(options, callback, animation)
   },
   unbind(options) {
     if (!options) {
       throw new Error('should pass options for binding');
     }
-    return WebBinding.unbind(options);
+    return Binding.unbind(options);
   },
   unbindAll() {
-    return WebBinding.unbindAll();
+    return Binding.unbindAll();
   }
 }

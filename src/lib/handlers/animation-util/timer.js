@@ -75,13 +75,15 @@ Timer.prototype = {
         this.percent = this._stop && this._stop.percent ? this._stop.percent : 1;
         this.duration = this._stop && this._stop.duration ? this._stop.duration : this.duration;
 
-        typeof onRun === 'function' ? onRun({
-          percent: this.progress,
-          originPercent: this.percent,
-          t: this.t,
-          type: TYPES.RUN
-        }) : null;
-
+        if (!this._stop) {
+          typeof onRun === 'function' ? onRun({
+            percent: this.progress,
+            originPercent: this.percent,
+            t: this.t,
+            type: TYPES.RUN
+          }) : null;
+        }
+        
         typeof onStop === 'function' ? onStop({
           percent: this.percent,
           t: this.t,

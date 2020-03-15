@@ -121,11 +121,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class Binding {
-  constructor(options, callback) {
+  constructor(options, callback, animation) {
     this.options = options;
     this.callback = callback;
     this.token = this.genToken();
-    this.animation = this.genAnimation();
+    this.animation = animation || this.genAnimation();
     let {eventType} = options;
     switch (eventType) {
       // case 'pan':
@@ -165,7 +165,7 @@ class Binding {
       let p = ps[ps.length - 1]
       animation = animation[p](value)
     }
-    animation.step()
+    animation.step({duration: 0})
   }
 
   destroy() {
@@ -176,7 +176,7 @@ class Binding {
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   _bindingInstances: [],
-  bind (options, callback) {
+  bind (options, callback, animation) {
     if (!options) {
       throw new Error('should pass options for binding');
     }
@@ -192,7 +192,7 @@ class Binding {
         this._bindingInstances.splice(this._bindingInstances.indexOf(inst), 1)
       });
     }
-    let binding = new Binding(options, callback);
+    let binding = new Binding(options, callback, animation);
     this._bindingInstances.push(binding);
     return {token: binding.token, animation: binding.animation};
   },
@@ -270,7 +270,7 @@ function formatExpression (expression) {
 }
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  bind (options, callback) {
+  bind (options, callback, animation) {
     if (!options) {
       throw new Error('should pass options for binding');
     }
@@ -283,16 +283,16 @@ function formatExpression (expression) {
       });
     }
     
-    return _binding__WEBPACK_IMPORTED_MODULE_1__["default"].bind(options, callback)
+    return _binding__WEBPACK_IMPORTED_MODULE_1__["default"].bind(options, callback, animation)
   },
   unbind(options) {
     if (!options) {
       throw new Error('should pass options for binding');
     }
-    return WebBinding.unbind(options);
+    return _binding__WEBPACK_IMPORTED_MODULE_1__["default"].unbind(options);
   },
   unbindAll() {
-    return WebBinding.unbindAll();
+    return _binding__WEBPACK_IMPORTED_MODULE_1__["default"].unbindAll();
   }
 });
 
@@ -357,7 +357,6 @@ function execute(node, scope) {
       return scope[node.value];
     case 'CallExpression':
       let fn = execute(children[0], scope);
-      // console.log('fn:',fn)
       let args = [];
       let jsonArguments = children[1].children;
       for (let i = 0; i < jsonArguments.length; i++) {
@@ -894,13 +893,15 @@ Timer.prototype = {
         this.percent = this._stop && this._stop.percent ? this._stop.percent : 1;
         this.duration = this._stop && this._stop.duration ? this._stop.duration : this.duration;
 
-        typeof onRun === 'function' ? onRun({
-          percent: this.progress,
-          originPercent: this.percent,
-          t: this.t,
-          type: TYPES.RUN
-        }) : null;
-
+        if (!this._stop) {
+          typeof onRun === 'function' ? onRun({
+            percent: this.progress,
+            originPercent: this.percent,
+            t: this.t,
+            type: TYPES.RUN
+          }) : null;
+        }
+        
         typeof onStop === 'function' ? onStop({
           percent: this.percent,
           t: this.t,

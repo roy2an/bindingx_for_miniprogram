@@ -48,7 +48,6 @@ function execute(node, scope) {
       return scope[node.value];
     case 'CallExpression':
       let fn = execute(children[0], scope);
-      // console.log('fn:',fn)
       let args = [];
       let jsonArguments = children[1].children;
       for (let i = 0; i < jsonArguments.length; i++) {

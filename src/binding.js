@@ -20,11 +20,11 @@ import Expression from './lib/expression'
 import {TimingHandler} from './lib/handlers/index'
 
 class Binding {
-  constructor(options, callback) {
+  constructor(options, callback, animation) {
     this.options = options;
     this.callback = callback;
     this.token = this.genToken();
-    this.animation = this.genAnimation();
+    this.animation = animation || this.genAnimation();
     let {eventType} = options;
     switch (eventType) {
       // case 'pan':
@@ -64,7 +64,7 @@ class Binding {
       let p = ps[ps.length - 1]
       animation = animation[p](value)
     }
-    animation.step()
+    animation.step({duration: 0})
   }
 
   destroy() {
@@ -75,7 +75,7 @@ class Binding {
 
 export default {
   _bindingInstances: [],
-  bind (options, callback) {
+  bind (options, callback, animation) {
     if (!options) {
       throw new Error('should pass options for binding');
     }
@@ -91,7 +91,7 @@ export default {
         this._bindingInstances.splice(this._bindingInstances.indexOf(inst), 1)
       });
     }
-    let binding = new Binding(options, callback);
+    let binding = new Binding(options, callback, animation);
     this._bindingInstances.push(binding);
     return {token: binding.token, animation: binding.animation};
   },
